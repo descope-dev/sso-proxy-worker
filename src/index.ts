@@ -10,9 +10,19 @@
  *
  * Learn more at https://developers.cloudflare.com/workers/
  */
-
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		return new Response('Hello World!');
-	},
+
+		let url = env.OLD_ACS_URL;
+
+		const requestClone = request.clone();
+		const formData = await request.formData();
+
+		if (formData.get('RelayState')?.toString().startsWith('s/')) {
+			console.log('Descope SAML request');
+			url = env.NEW_ACS_URL
+		}
+		console.log('Redirecting to', url);
+		return fetch(url, requestClone);
+	}
 } satisfies ExportedHandler<Env>;

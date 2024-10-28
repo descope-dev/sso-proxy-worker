@@ -16,9 +16,24 @@ export default {
 		let url = env.OLD_ACS_URL;
 
 		const requestClone = request.clone();
-		const formData = await request.formData();
 
-		if (formData.get('RelayState')?.toString().startsWith('s/')) {
+		const requestUrl = new URL(request.url);
+
+		if (request.method === 'POST') {
+			const contentType = request.headers.get('Content-Type');
+			if (contentType && (contentType.includes('application/x-www-form-urlencoded') || contentType.includes('multipart/form-data'))) {
+				const formData = await request.formData();
+				if (formData.get('RelayState')?.toString().startsWith('s/')) {
+					console.log('Descope SAML request detected, proxying to', env.NEW_ACS_URL);
+					url = env.NEW_ACS_URL;
+				}
+			} else {
+				console.error('Invalid Content-Type for FormData:', contentType);
+			}
+		}
+
+		const relayStateQueryParam = requestUrl.searchParams.get('RelayState');
+		if (relayStateQueryParam?.startsWith('s/')) {
 			console.log('Descope SAML request detected, proxying to', env.NEW_ACS_URL);
 			url = env.NEW_ACS_URL
 		}

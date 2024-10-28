@@ -19,10 +19,10 @@ export default {
 		const formData = await request.formData();
 
 		if (formData.get('RelayState')?.toString().startsWith('s/')) {
-			console.log('Descope SAML request');
+			console.log('Descope SAML request detected, proxying to', env.NEW_ACS_URL);
 			url = env.NEW_ACS_URL
 		}
-		console.log('Redirecting to', url);
+
 		return fetch(url, requestClone);
 	}
 } satisfies ExportedHandler<Env>;

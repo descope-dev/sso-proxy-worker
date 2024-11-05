@@ -24,8 +24,8 @@ enabled = true
 # - https://developers.cloudflare.com/workers/configuration/secrets/
 
 [vars]
-OLD_ACS_URL = "https://google.com"
-NEW_ACS_URL = "https://api.descope.org/saml_auth"
+OLD_ACS_URL = "https://your_upsream"
+NEW_ACS_URL = "https://api.descope.com/saml_auth"
 
 # Bind the Workers AI model catalog. Run machine learning models, powered by serverless GPUs, on Cloudflare’s global network
 # Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#workers-ai

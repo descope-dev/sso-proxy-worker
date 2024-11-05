@@ -28,10 +28,11 @@ export default {
 					url = env.NEW_ACS_URL;
 				}
 			} else {
-				console.error('Invalid Content-Type for FormData:', contentType);
+				console.warn('Invalid Content-Type for FormData:', contentType);
 			}
 		}
 
+		// Check for Descope SAML request in query parasm
 		const relayStateQueryParam = requestUrl.searchParams.get('RelayState');
 		if (relayStateQueryParam?.startsWith('s/')) {
 			console.log('Descope SAML request detected, proxying to', env.NEW_ACS_URL);

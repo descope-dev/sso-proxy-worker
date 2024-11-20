@@ -1,5 +1,5 @@
 #:schema node_modules/wrangler/config-schema.json
-name = "sso-proxy-worker"
+name = "sso-proxy-worker-new"
 main = "src/index.ts"
 compatibility_date = "2024-10-22"
 compatibility_flags = ["nodejs_compat"]
@@ -9,6 +9,10 @@ compatibility_flags = ["nodejs_compat"]
 # Configuration: https://developers.cloudflare.com/workers/observability/logs/workers-logs/#enable-workers-logs
 [observability]
 enabled = true
+
+[[routes]]
+pattern = "example.com/my-route"
+zone_name = "example.com"
 
 # Automatically place your workloads in an optimal location to minimize latency.
 # If you are running back-end logic in a Worker, running it closer to your back-end infrastructure
@@ -24,7 +28,7 @@ enabled = true
 # - https://developers.cloudflare.com/workers/configuration/secrets/
 
 [vars]
-OLD_ACS_URL = "https://your_upsream"
+OLD_ACS_URL = "https://google.com"
 NEW_ACS_URL = "https://api.descope.com/saml_auth"
 
 # Bind the Workers AI model catalog. Run machine learning models, powered by serverless GPUs, on Cloudflare’s global network
